@@ -65,7 +65,12 @@ app.post('/upload', upload.single('image'), async (req, res) => {
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://create-quiz-lyart.vercel.app',  // URL do seu frontend hospedado
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true
+}));
+
 
 app.use(authRoutes);
 app.use('/api/quiz', quizRoutes);
