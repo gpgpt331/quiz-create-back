@@ -79,7 +79,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 // Conectar ao MongoDB
-mongoose.connect('mongodb://mongo:mBIWsLoMfxTuOkmAFMxfJJVHvzLXHtSc@junction.proxy.rlwy.net:25980', {
+mongoose.connect('mongodb://mongo:mBIWsLoMfxTuOkmAFMxfJJVHvzLXHtSc@junction.proxy.rlwy.net:25980/users', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
