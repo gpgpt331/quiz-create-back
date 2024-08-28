@@ -79,7 +79,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 // Conectar ao MongoDB
-mongoose.connect('mongodb://localhost:27017/myapp', {
+mongoose.connect('mongodb://mongo:mBIWsLoMfxTuOkmAFMxfJJVHvzLXHtSc@mongodb.railway.internal:27017', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
