@@ -1,7 +1,6 @@
 require('dotenv').config(); 
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const bcrypt = require('bcryptjs');  
 const authRoutes = require('./routes/auth');  
 const User = require('./models/User'); 
@@ -65,11 +64,7 @@ app.post('/upload', upload.single('image'), async (req, res) => {
 
 // Middleware
 app.use(express.json());
-app.use(cors({
-  origin: 'https://create-quiz-lyart.vercel.app',  // URL do seu frontend hospedado
-  methods: 'GET,POST,PUT,DELETE',
-  credentials: true
-}));
+
 
 
 app.use(authRoutes);
