@@ -37,7 +37,7 @@ router.post('/login', async (req, res) => {
 
 
 // Rota de registro
-router.post('/register', async (req, res) => {
+router.post('/api/auth/register', async (req, res) => {
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
