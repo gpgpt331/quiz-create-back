@@ -63,13 +63,23 @@ app.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
+
+app.use(cors({
+  origin: '*', // Permite requisições apenas dessa origem
+}));
+
+app.post('/test', (req, res) => {
+  res.json({
+    status: 'success',
+    message: 'Servidor está online e respondendo!'
+  });
+});
+
+
 // Middleware
 app.use(express.json());
 
 
-app.use(cors({
-  origin: 'https://create-quiz-lyart.vercel.app' // Permite requisições apenas dessa origem
-}));
 
 app.use(authRoutes);
 app.use('/api/quiz', quizRoutes);
