@@ -52,8 +52,8 @@ module.exports = router;
 
 router.post('/create', async (req, res) => {
     try {
-        const { nome, descricao, preco, duracao, gatewayId } = req.body;
-        const newPlan = new Plan({ nome, descricao, preco, duracao, gatewayId });
+        const { nome, descricao, preco, duracao} = req.body;
+        const newPlan = new Plan({ nome, descricao, preco, duracao });
         await newPlan.save();
         res.status(201).json(newPlan);
     } catch (error) {
