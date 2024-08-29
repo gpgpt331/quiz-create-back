@@ -8,12 +8,12 @@ const Plan = require('../models/Plan');
 // Rota para editar um plano
 router.put('/:id', async (req, res) => {
     const { id } = req.params;  // Certifique-se de que o ID está sendo capturado corretamente
-    const { nome, descricao, preco, duracao, gatewayId } = req.body;
+    const { nome, descricao, preco, duracao } = req.body;
 
     try {
         const plano = await Plan.findByIdAndUpdate(
             id,  // Passa o ID diretamente
-            { nome, descricao, preco, duracao, gatewayId },
+            { nome, descricao, preco, duracao },
             { new: true, runValidators: true }
         );
 
@@ -52,8 +52,8 @@ module.exports = router;
 
 router.post('/create', async (req, res) => {
     try {
-        const { nome, descricao, preco, duracao, gatewayId } = req.body;
-        const newPlan = new Plan({ nome, descricao, preco, duracao, gatewayId });
+        const { nome, descricao, preco, duracao} = req.body;
+        const newPlan = new Plan({ nome, descricao, preco, duracao });
         await newPlan.save();
         res.status(201).json(newPlan);
     } catch (error) {

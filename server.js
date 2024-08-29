@@ -11,6 +11,7 @@ const planRoutes = require('./routes/plans');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
 
 
 
@@ -62,6 +63,19 @@ app.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
+
+app.use(cors({
+  origin: '*', // Permite requisições apenas dessa origem
+}));
+
+app.post('/test', (req, res) => {
+  res.json({
+    status: 'success',
+    message: 'Servidor está online e respondendo!'
+  });
+});
+
+
 // Middleware
 app.use(express.json());
 
@@ -89,7 +103,7 @@ mongoose.connect('mongodb://mongo:mBIWsLoMfxTuOkmAFMxfJJVHvzLXHtSc@mongodb.railw
 });
 
 // Iniciar o servidor
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
