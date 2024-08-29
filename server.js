@@ -11,6 +11,7 @@ const planRoutes = require('./routes/plans');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
 
 
 
@@ -66,6 +67,9 @@ app.post('/upload', upload.single('image'), async (req, res) => {
 app.use(express.json());
 
 
+app.use(cors({
+  origin: 'https://create-quiz-lyart.vercel.app' // Permite requisições apenas dessa origem
+}));
 
 app.use(authRoutes);
 app.use('/api/quiz', quizRoutes);
