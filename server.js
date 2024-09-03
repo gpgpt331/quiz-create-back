@@ -30,37 +30,41 @@ if (!fs.existsSync(uploadsDir)) {
 
 // Configuração do multer para salvar imagens localmente
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + '-' + file.originalname);
-    }
-  });
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // pasta onde os arquivos serão salvos
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // nome do arquivo
+  }
+});
 
-  // Crie um modelo para armazenar as informações da imagem
-const ImageSchema = new mongoose.Schema({
-    imageUrl: String,
-    userId: String,
-  });
-
-  const Image = mongoose.model('Image', ImageSchema);
 
   const upload = multer({ storage: storage });
 
 // Endpoint para upload de imagem
-app.post('/upload', upload.single('image'), async (req, res) => {
-  try {
-    const { userId } = req.body; // Receba o userId do corpo da requisição
-    const newImage = new Image({
-      imageUrl: req.file.path, // Caminho da imagem salva
-      userId: userId, // Associe o userId à imagem
-    });
-    await newImage.save();
-    res.status(201).json({ message: 'Imagem enviada com sucesso!', imageUrl: req.file.path });
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao salvar a imagem' });
+app.post('/upload', upload.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send('Nenhum arquivo enviado.');
   }
+  const imageUrl = `/uploads/${req.file.filename}`;
+  res.status(200).json({ imageUrl });
+});
+
+app.get('/images', (req, res) => {
+  const directoryPath = path.join(__dirname, 'uploads');
+
+  fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+      return res.status(500).send('Erro ao ler o diretório de imagens.');
+    }
+
+    const imageFiles = files.map(file => ({
+      name: file,
+      url: `/uploads/${file}`
+    }));
+
+    res.status(200).json(imageFiles);
+  });
 });
 
 
