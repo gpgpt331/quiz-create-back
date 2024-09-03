@@ -55,7 +55,7 @@ app.use('/api', quizRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/webhook', webhook);
 app.use('/api/plans', planRoutes);
-app.use('/api', imageRoutes); // Ou o caminho que você configurou
+app.use('/api/my-images', imageRoutes); // Ou o caminho que você configurou
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
