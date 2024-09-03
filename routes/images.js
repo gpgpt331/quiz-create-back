@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
   
   
   // Rota para obter as imagens do usuário logado
-router.get('/api/my-images', auth, async (req, res) => {
+router.get('/api/images', auth, async (req, res) => {
     try {
       // Busca as imagens associadas ao usuário logado
       const images = await Image.find({ userId: req.user._id });
