@@ -41,32 +41,34 @@ const storage = multer.diskStorage({
 
   const upload = multer({ storage: storage });
 
-// Endpoint para upload de imagem
-app.post('/upload', upload.single('image'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).send('Nenhum arquivo enviado.');
+// Rota de upload de imagem
+router.post('/upload', auth, upload.single('image'), async (req, res) => {
+  try {
+    // Cria um novo documento de imagem com o ID do usuário logado
+    const image = new Image({
+      filename: req.file.filename,
+      url: `/uploads/${req.file.filename}`,
+      userId: req.user._id // Pega o ID do usuário logado do middleware de autenticação
+    });
+
+    await image.save();
+    res.status(201).json({ message: 'Imagem enviada com sucesso!', image });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao enviar a imagem', error });
   }
-  const imageUrl = `/uploads/${req.file.filename}`;
-  res.status(200).json({ imageUrl });
 });
 
-app.get('/images', (req, res) => {
-  const directoryPath = path.join(__dirname, 'uploads');
+// Rota para obter as imagens do usuário logado
+router.get('/my-images', auth, async (req, res) => {
+  try {
+    // Busca as imagens associadas ao usuário logado
+    const images = await Image.find({ userId: req.user._id });
 
-  fs.readdir(directoryPath, (err, files) => {
-    if (err) {
-      return res.status(500).send('Erro ao ler o diretório de imagens.');
-    }
-
-    const imageFiles = files.map(file => ({
-      name: file,
-      url: `/uploads/${file}`
-    }));
-
-    res.status(200).json(imageFiles);
-  });
+    res.status(200).json(images);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar imagens', error });
+  }
 });
-
 
 app.use(cors()); // Habilita o CORS para todas as requisições
 
