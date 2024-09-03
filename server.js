@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const User = require('./models/User'); 
 const quizRoutes = require('./routes/quiz');
 const planos = require('./models/Plan')
+const Image = require('./models/images')
 const webhook = require('./routes/webhook')
 const planRoutes = require('./routes/plans');
 const multer = require('multer');
