@@ -23,7 +23,7 @@ const upload = multer({ storage });
 const authenticate = require('../middleware/auth'); // Exemplo de middleware para autenticação
 
 // Rota para criar um novo quiz
-router.post('/', authenticate, upload.single('image'), async (req, res) => {
+router.post('/', authenticate, async (req, res) => {
     const { title, questions, thankYouTitle, thankYouMessage, thankYouLink } = req.body;
 
     if (!questions || questions.length === 0) {
@@ -31,8 +31,6 @@ router.post('/', authenticate, upload.single('image'), async (req, res) => {
     }
 
     try {
-        const imageUrl = req.file ? req.file.path : null; // Salva o caminho da imagem, se houver
-
         const newQuiz = new Quiz({ 
             title, 
             questions: JSON.parse(questions), // Lembre-se de fazer o parse das perguntas, pois elas foram enviadas como string
@@ -40,7 +38,6 @@ router.post('/', authenticate, upload.single('image'), async (req, res) => {
             thankYouTitle,
             thankYouMessage,
             thankYouLink,
-            imageUrl, // Adiciona a URL da imagem ao documento do quiz
         });
         await newQuiz.save();
         res.status(201).json(newQuiz);

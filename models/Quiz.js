@@ -14,7 +14,6 @@ const quizSchema = new mongoose.Schema({
     title: { type: String, required: true },
     questions: [questionSchema],
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    logoImage: { type: String }, // Novo campo para a URL da imagem
     thankYouTitle: { type: String },
     thankYouMessage: { type: String },
     thankYouLink: { type: String }
