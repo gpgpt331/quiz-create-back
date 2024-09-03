@@ -1,7 +1,7 @@
 const express = require('express');
 const Image = require('../models/Image');
 const auth = require('../middleware/auth'); // Middleware de autenticação
-
+const multer = require('multer');
 const router = express.Router();
 
 // Configuração do multer para salvar imagens localmente
