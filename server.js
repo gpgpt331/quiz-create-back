@@ -9,6 +9,7 @@ const planos = require('./models/Plan')
 const Image = require('./models/Image')
 const webhook = require('./routes/webhook')
 const planRoutes = require('./routes/plans');
+const imageRoutes = require('./routes/images');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
@@ -54,6 +55,7 @@ app.use('/api', quizRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/webhook', webhook);
 app.use('/api/plans', planRoutes);
+app.use('/api', imageRoutes); // Ou o caminho que você configurou
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
