@@ -68,9 +68,11 @@ app.get('/images', (req, res) => {
 });
 
 
-app.use(cors({
-  origin: '*', // Permite requisições apenas dessa origem
-}));
+app.use(cors()); // Habilita o CORS para todas as requisições
+
+ //app.use(cors({
+  //origin: '*', // Permite requisições apenas dessa origem
+//}));
 
 app.post('/test', (req, res) => {
   res.json({
